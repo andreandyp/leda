@@ -1,15 +1,52 @@
 {
-    "name": "leda",
-    "services": [
-        {
-            "type": "endpoint",
-            "name": "development",
-            "endpoint": "http://localhost:3978/api/messages",
-            "appId": "",
-            "appPassword": "",
-            "id": "1"
-        }
-    ],
-    "padlock": "",
-    "version": "2.0"
+  "name": "leda",
+  "padlock": "pmkJTl0MBUStw4/rpGP/pA==!v9znpm82AF3isZloea0RNAkWeHpHFaCPR4ieM/zh5iP6S2rzP1RfMrg6vTc+LnRL",
+  "version": "2.0",
+  "services": [
+    {
+      "tenantId": "f94bf4d9-8097-4794-adf6-a5466ca28563",
+      "subscriptionId": "b77ca2ab-8f68-4704-8779-5744075a13a2",
+      "resourceGroup": "localhackday",
+      "serviceName": "leda",
+      "type": "abs",
+      "name": "leda",
+      "id": "1"
+    },
+    {
+      "connectionString": "pRz8hKpFWxPmsK/t7sK8Qw==!7rpbQUvjL/iGe6MtSOZFDSKATSnk/o2YqDuCLYtfsbtB56ZcN2whbkubdjMpyKyH9y7tdW+Rw2WfPh0xpx+++0AG+wHdxiKGxVjx+pTmAxKbkU0whrrg4tCr6ZT0NINMQq7muErkRtKHCDUliTwxkx6Q0y8jrS92p4z+qcukrozTyLCgIYNzilAU8yczjogWTE0SnWPF//oRw4lo4K7w0g==",
+      "tenantId": "f94bf4d9-8097-4794-adf6-a5466ca28563",
+      "subscriptionId": "b77ca2ab-8f68-4704-8779-5744075a13a2",
+      "resourceGroup": "localhackday",
+      "serviceName": "leda",
+      "type": "blob",
+      "id": "2"
+    },
+    {
+      "appId": "",
+      "appPassword": "",
+      "endpoint": "http://localhost:3978/api/messages",
+      "type": "endpoint",
+      "name": "development",
+      "id": "3"
+    },
+    {
+      "appId": "e6555374-6976-4729-b764-86661c7bf546",
+      "appPassword": "Tfof6E+1FbsrrqFd3tSfRg==!U4N8qF3AkMFi7F2Vg82/5SbaoJpy9upz/ijC5AOJ6Ak=",
+      "endpoint": "https://leda.azurewebsites.net/api/messages",
+      "type": "endpoint",
+      "name": "production",
+      "id": "4"
+    },
+    {
+      "instrumentationKey": "CSx98CUYOKLzDslUmFS50w==!6BHXlsHfupkgr6Ss9N10fT9pqZA4k7fRXh/3J/WuNB4WzRqBRB86Vmy5T5QDZY3X",
+      "applicationId": "89ed077a-b938-4a97-b858-d6b92ef56b4e",
+      "apiKeys": {},
+      "tenantId": "f94bf4d9-8097-4794-adf6-a5466ca28563",
+      "subscriptionId": "b77ca2ab-8f68-4704-8779-5744075a13a2",
+      "resourceGroup": "localhackday",
+      "serviceName": "ledauhifvz",
+      "type": "appInsights",
+      "id": "5"
+    }
+  ]
 }
