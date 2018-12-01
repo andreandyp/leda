@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 const path = require('path');
 const restify = require('restify');
 
@@ -16,8 +13,8 @@ const { MyBot } = require('./bot');
 
 // Read botFilePath and botFileSecret from .env file
 // Note: Ensure you have a .env file and include botFilePath and botFileSecret.
-const ENV_FILE = path.join(__dirname, '.env');
-const env = require('dotenv').config({path: ENV_FILE});
+// const ENV_FILE = path.join(__dirname, '.env');
+// const env = require('dotenv').config({ path: ENV_FILE });
 
 // bot endpoint name as defined in .bot file
 // See https://aka.ms/about-bot-file to learn more about .bot file its use and bot configuration .
@@ -27,11 +24,9 @@ const DEV_ENVIRONMENT = 'development';
 // See https://aka.ms/about-bot-file to learn more about .bot file its use and bot configuration.
 const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
 
-
-// Create HTTP server
 let server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log(`\n${server.name} listening to ${server.url}`);
+server.listen(process.env.port || process.env.PORT || 3978, () => {
+    console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
     console.log(`\nTo talk to your bot, open leda.bot file in the Emulator`);
 });
@@ -87,7 +82,7 @@ const myBot = new MyBot(conversationState);
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
-    console.error(`\n [onTurnError]: ${error}`);
+    console.error(`\n [onTurnError]: ${ error }`);
     // Send a message to the user
     context.sendActivity(`Oops. Something went wrong!`);
     // Clear out state
@@ -104,4 +99,3 @@ server.post('/api/messages', (req, res) => {
         await myBot.onTurn(context);
     });
 });
-
