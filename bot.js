@@ -4,6 +4,7 @@
 // bot.js is your bot's main entry point to handle incoming activities.
 
 const { ActivityTypes } = require('botbuilder');
+const request = require('request-promise-native');
 
 // Turn counter property
 const TURN_COUNTER_PROPERTY = 'turnCounterProperty';
@@ -26,16 +27,53 @@ class EchoBot {
      * @param {TurnContext} on turn context object.
      */
     async onTurn(turnContext) {
-        // Handle message activity type. User's responses via text or speech or card interactions flow back to the bot as Message activity.
-        // Message activities may contain text, speech, interactive cards, and binary or unknown attachments.
-        // see https://aka.ms/about-bot-activity-message to learn more about the message and other activity types
         if (turnContext.activity.type === ActivityTypes.Message) {
-            // read from state.
-            let count = await this.countProperty.get(turnContext);
-            count = count === undefined ? 1 : ++count;
-            await turnContext.sendActivity(`${ count }: You said "${ turnContext.activity.text }"`);
-            // increment and set turn counter.
-            await this.countProperty.set(turnContext, count);
+            let num = Math.trunc(Math.random() * 4);
+            let frases = ['¿Quieres contarme más?', 'Vaya...', 'Oh', 'Sígueme contando'];
+            await turnContext.sendActivity(frases[num]);
+        } else if (turnContext.activity.type === ActivityTypes.ConversationUpdate) {
+            if (turnContext.activity.membersAdded[0].name === 'Bot') {
+                return;
+            }
+            try {
+                let response = await request({ method: 'GET', uri: 'http://localhost:3001/' });
+                if (!response) {
+                    await turnContext.sendActivity('No has iniciado sesión, tu historial no se guardará');
+                } else {
+                    await turnContext.sendActivity(`Hola ${ response }`);
+                }
+
+                await turnContext.sendActivity(JSON.parse(`{
+  "type": "message",
+  "text": "Cuéntame acerca de ti",
+  "attachments": [
+    {
+      "contentType": "application/vnd.microsoft.card.adaptive",
+      "content": {
+        "type": "AdaptiveCard",
+        "version": "1.0",
+        "body": [
+          {
+            "type": "TextBlock",
+            "text": "¿No sabes por dónde empezar? Contesta una de estas preguntas:"
+          },
+          {
+            "type": "TextBlock",
+            "text": "*¿Cómo estas?* *¿Cómo te sientes?* *¿Qué tal tu día?*",
+            "separation": "none"
+          },
+          {
+            "type": "TextBlock",
+            "text": "Entre más información me des, mejor"
+          }
+        ]
+      }
+    }
+  ]
+}`));
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             // Generic handler for all other activity types.
             await turnContext.sendActivity(`[${ turnContext.activity.type } event detected]`);

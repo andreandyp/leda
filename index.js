@@ -1,9 +1,6 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-// Import required packages
 const path = require('path');
 const restify = require('restify');
+const { MongoClient } = require('mongodb');
 
 // Import required bot services. See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter, ConversationState, MemoryStorage } = require('botbuilder');
@@ -67,31 +64,12 @@ adapter.onTurnError = async (context, error) => {
 // A bot requires a state store to persist the dialog and user state between messages.
 let conversationState;
 
-// For local development, in-memory storage is used.
-// CAUTION: The Memory Storage used here is for local bot debugging only. When the bot
-// is restarted, anything stored in memory will be gone.
 const memoryStorage = new MemoryStorage();
 conversationState = new ConversationState(memoryStorage);
-
-// CAUTION: You must ensure your product environment has the NODE_ENV set
-//          to use the Azure Blob storage or Azure Cosmos DB providers.
-// const { BlobStorage } = require('botbuilder-azure');
-// Storage configuration name or ID from .bot file
-// const STORAGE_CONFIGURATION_ID = '<STORAGE-NAME-OR-ID-FROM-BOT-FILE>';
-// // Default container name
-// const DEFAULT_BOT_CONTAINER = 'botstate';
-// // Get service configuration
-// const blobStorageConfig = botConfig.findServiceByNameOrId(STORAGE_CONFIGURATION_ID);
-// const blobStorage = new BlobStorage({
-//     containerName: (blobStorageConfig.container || DEFAULT_BOT_CONTAINER),
-//     storageAccountOrConnectionString: blobStorageConfig.connectionString,
-// });
-// conversationState = new ConversationState(blobStorage);
 
 // Create the main dialog.
 const bot = new EchoBot(conversationState);
 
-// Create HTTP server
 let server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log(`\n${ server.name } listening to ${ server.url }`);
@@ -99,10 +77,8 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log(`\nTo talk to your bot, open echoBot-with-counter.bot file in the Emulator`);
 });
 
-// Listen for incoming activities and route them to your bot main dialog.
 server.post('/api/messages', (req, res) => {
     adapter.processActivity(req, res, async (context) => {
-        // route to main dialog.
         await bot.onTurn(context);
     });
 });

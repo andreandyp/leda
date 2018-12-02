@@ -1,7 +1,5 @@
 {
   "name": "leda",
-  "padlock": "pmkJTl0MBUStw4/rpGP/pA==!v9znpm82AF3isZloea0RNAkWeHpHFaCPR4ieM/zh5iP6S2rzP1RfMrg6vTc+LnRL",
-  "version": "2.0",
   "services": [
     {
       "tenantId": "f94bf4d9-8097-4794-adf6-a5466ca28563",
@@ -48,5 +46,7 @@
       "type": "appInsights",
       "id": "5"
     }
-  ]
+  ],
+  "padlock": "",
+  "version": "2.0"
 }
